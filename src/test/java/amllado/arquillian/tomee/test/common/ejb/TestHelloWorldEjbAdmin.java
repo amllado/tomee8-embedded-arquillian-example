@@ -1,5 +1,7 @@
 package amllado.arquillian.tomee.test.common.ejb;
 
+import static org.junit.Assert.assertTrue;
+
 import java.net.URL;
 
 import javax.annotation.security.RunAs;
@@ -10,7 +12,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,28 +53,15 @@ public class TestHelloWorldEjbAdmin
             throw new RuntimeException( e );
         }
 
-        Assert.assertTrue( message != null && message.length() > 0 );
+        assertTrue( message != null && message.length() > 0 );
     }
 
     /**
      * Acceso con rol incorrecto especificado en el @RunAs. Debe producirse un error de acceso y comprobar que así ocurre.
      */
-    @Test
-    public void testHelloWorldEjbUser()
+    @Test( expected = EJBAccessException.class )
+    public void testHelloWorldEjbUserShouldEJBAccessException()
     {
-        String message;
-        Exception ejbException = null;
-
-        try
-        {
-            message = service.helloWorldUser();
-            System.out.println( message ); // Nunca habría que llegar aquí.
-        }
-        catch ( Exception e )
-        {
-            ejbException = e;
-        }
-
-        Assert.assertTrue( ejbException != null && ejbException instanceof EJBAccessException );
+        service.helloWorldUser();
     }
 }
