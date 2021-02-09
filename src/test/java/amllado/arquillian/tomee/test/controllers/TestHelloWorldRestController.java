@@ -1,5 +1,8 @@
 package amllado.arquillian.tomee.test.controllers;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -14,7 +17,6 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,9 +46,9 @@ public class TestHelloWorldRestController
                     authorizationHeader );
             final Response response = webClient.path( "rest/helloWorld/helloWorldEjbUser" ).get();
 
-            Assert.assertNotNull( response );
+            assertNotNull( response );
             System.out.println( response.getStatus() );
-            Assert.assertTrue( response.getStatus() == Response.Status.OK.getStatusCode()
+            assertTrue( response.getStatus() == Response.Status.OK.getStatusCode()
                     || response.getStatus() == Response.Status.FOUND.getStatusCode() );
 
             System.out.println( IOUtils.toString( ( InputStream ) response.getEntity() ) );
@@ -70,9 +72,9 @@ public class TestHelloWorldRestController
                     authorizationHeader );
             final Response response = webClient.path( "rest/helloWorld/helloWorldEjbAdmin" ).get();
 
-            Assert.assertNotNull( response );
+            assertNotNull( response );
             System.out.println( response.getStatus() );
-            Assert.assertTrue( response.getStatus() == Response.Status.OK.getStatusCode()
+            assertTrue( response.getStatus() == Response.Status.OK.getStatusCode()
                     || response.getStatus() == Response.Status.FOUND.getStatusCode() );
 
             System.out.println( IOUtils.toString( ( InputStream ) response.getEntity() ) );
